@@ -34,3 +34,14 @@ def stap3(meerbestellen:str,aantalbolletjes:int,bakjeofhoorntje:str):
         return error()
 
 
+
+
+
+
+
+
+
+
+
+
+
