@@ -7,6 +7,9 @@ def error():
 def errorbakje():
     print("Sorry, een bakje kan maximaal 8 bolletjes bevatten.")
 
+def totziens():
+    print("Bedankt voor het bestellen bij Papi Gelato, tot ziens!")
+
 def aantalbolletjes():
     herhalen =  True
     while herhalen == True:
@@ -23,7 +26,7 @@ def aantalbolletjes():
             elif bolletjes > 8:
                 errorbakje()
                 herhalen = True
-            elif bolletjes == 0 or bolletjes <0:
+            elif bolletjes <=0:
                 error()
                 herhalen = True
         except:
@@ -59,10 +62,25 @@ def meerbestellen():
         error()
     return nognkeer
 
-def bestelling(aantalbolletjes:int,verpakking:str):
-    bestelling = {}
-    bestelling[verpakking]=aantalbolletjes
-    return bestelling
+def bonnetje(aantalbolletjes:int,verpakking:str):
+    totaalbolletjes=0
+    totaalhoorntjes=0
+    totalbakjes=0
+    totaalbolletjes+=aantalbolletjes
+    if verpakking == 'hoorntje':
+        totaalhoorntjes+=1
+    elif verpakking == 'bakje':
+        totalbakjes+=1
+    else:
+        error()
+    print("Hier is uw bonnetje!")
+    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    print("bolletjes: "+str(totaalbolletjes)+"x 1.10 : "+str(totaalbolletjes*1.10))
+    print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 : "+str(totaalhoorntjes*1.25))
+    print("bakjes: "+str(totalbakjes)+"x 0.75 : "+str(totalbakjes*0.75))
+    print("totaal: "+str(totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75))
+    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    return bonnetje
 
 
 
