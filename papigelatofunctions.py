@@ -1,3 +1,4 @@
+
 def showintro():
     print('Welkom bij Papi Gelato je mag alle smaken kiezen zolang het maar vanile ijs is.')
 
@@ -37,13 +38,19 @@ def verpakking(aantalbolletjes):
     herhalen = True
     while herhalen == True:
         try:
-            bakje = input('Wilt u deze '+ str(aantalbolletjes) +' bolletje(s) in een hoorntje of een bakje? ').lower()
-            if bakje == 'bakje':
+            if aantalbolletjes <=4:
+                bakje = input('Wilt u deze '+ str(aantalbolletjes) +' bolletje(s) in een hoorntje of een bakje? ').lower()
+                if bakje == 'bakje':
+                    verpakking = 'bakje'
+                    herhalen = False
+                    return verpakking
+                elif bakje == 'hoorntje':
+                    verpakking = 'hoorntje'
+                    herhalen = False
+                    return verpakking
+            else:
+                print("U krijgt een bakje met "+str(aantalbolletjes)+" bolletje(s).")
                 verpakking = 'bakje'
-                herhalen = False
-                return verpakking
-            elif bakje == 'hoorntje':
-                verpakking = 'hoorntje'
                 herhalen = False
                 return verpakking
         except:
@@ -62,25 +69,69 @@ def meerbestellen():
         error()
     return nognkeer
 
-def bonnetje(aantalbolletjes:int,verpakking:str):
+def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list):
     totaalbolletjes=0
     totaalhoorntjes=0
     totalbakjes=0
     totaalbolletjes+=aantalbolletjes
-    if verpakking == 'hoorntje':
-        totaalhoorntjes+=1
-    elif verpakking == 'bakje':
-        totalbakjes+=1
-    else:
-        error()
+    for verpakking in verpakkingen:
+        if verpakking == 'hoorntje':
+            totaalhoorntjes+=1
+        elif verpakking == 'bakje':
+            totalbakjes+=1
+        else:
+            error()
     print("Hier is uw bonnetje!")
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    print("bolletjes: "+str(totaalbolletjes)+"x 1.10 : "+str(totaalbolletjes*1.10))
+    aantalsmaken={}
+    for smaak in smaken:
+        if smaak in aantalsmaken:
+            aantalsmaken[smaak]+=1
+        else:
+            aantalsmaken[smaak]=1
+    if "Aardbei" in smaken:
+        print("B.Aardbei: "+str(aantalsmaken['Aardbei'])+"x 1.10 : "+str(aantalsmaken['Aardbei']*1.10))
+    if "Chocolade" in smaken:
+        print("B.Chocolade: "+str(aantalsmaken['Chocolade'])+"x 1.10 : "+str(aantalsmaken['Chocolade']*1.10))
+    if "Vanille" in smaken:
+        print("B.Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 : "+str(aantalsmaken['Vanille']*1.10))
+    if "Munt" in smaken:
+        print("B.Munt: "+str(aantalsmaken['Munt'])+"x 1.10 : "+str(aantalsmaken['Munt']*1.10))
     print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 : "+str(totaalhoorntjes*1.25))
     print("bakjes: "+str(totalbakjes)+"x 0.75 : "+str(totalbakjes*0.75))
-    print("totaal: "+str(totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75))
+    print(("totaal: "+str(totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75)))
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    return bonnetje
+def smaken(aantalbolletjes:int):
+    smakenlist=[]
+    repeat = True
+    while repeat == True:
+        try:
+            smaak = input("Welke smaak wilt u voor bolletje "+str(aantalbolletjes+1)+" A) Aardbei, C) Chocolade, M) Munt of V) Vanille?”").lower()
+            if smaak == "a":
+                smaak = "Aardbei"
+                smakenlist.append(smaak)
+                repeat = False
+            elif smaak == "c":
+                smaak = "Chocolade"
+                smakenlist.append(smaak)
+                repeat = False
+            elif smaak == "m":
+                smaak = "Munt"
+                smakenlist.append(smaak)
+                repeat = False
+            elif smaak == "v":
+                smaak = "Vanille"
+                smakenlist.append(smaak)
+                repeat = False
+            else:
+                error()
+        except:
+            error()
+    return smakenlist
+
+
+
+
 
 
 
