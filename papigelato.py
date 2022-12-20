@@ -9,8 +9,7 @@ while herhalen == True:
     bolletjes=aantalbolletjes()
     for i in range(bolletjes):
         smakenbolletjes=smaken(i)
-        for smaak in smakenbolletjes:
-            smakenbolletjestotaal.append(smaak)
+        smakenbolletjestotaal.append(smakenbolletjes)
     verpakkingbolletjes = verpakking(bolletjes)
     topping=toppingkiezen(verpakkingbolletjes)
     toppings+=topping

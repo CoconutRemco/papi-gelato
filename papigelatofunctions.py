@@ -82,7 +82,7 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list):
         else:
             error()
     print("Hier is uw bonnetje!")
-    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    print("-=-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-")
     aantalsmaken={}
     for smaak in smaken:
         if smaak in aantalsmaken:
@@ -97,39 +97,38 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list):
         print("B.Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 = "+str(aantalsmaken['Vanille']*1.10))
     if "Munt" in smaken:
         print("B.Munt: "+str(aantalsmaken['Munt'])+"x 1.10 = "+str(aantalsmaken['Munt']*1.10))
-    print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 = "+str(totaalhoorntjes*1.25))
-    print("bakjes: "+str(totalbakjes)+"x 0.75 = "+str(totalbakjes*0.75))
+    if totaalhoorntjes >0:
+        print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 = "+str(totaalhoorntjes*1.25))
+    if totalbakjes >0:
+        print("bakjes: "+str(totalbakjes)+"x 0.75 = "+str(totalbakjes*0.75))
     if toppings > 0:
-        print("toppings "                              " ="    +str(toppings))
-    print(("totaal: "+str(totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75+toppings)))
-    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        print("toppings            "                              " ="    +str(toppings))
+    totaal=totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75+toppings
+    print("totaal: "+str(round(totaal,2)))
+    print("-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-=-")
+
 def smaken(aantalbolletjes:int):
-    smakenlist=[]
     repeat = True
     while repeat == True:
         try:
             smaak = input("Welke smaak wilt u voor bolletje "+str(aantalbolletjes+1)+" A) Aardbei, C) Chocolade, M) Munt of V) Vanille?”").lower()
             if smaak == "a":
                 smaak = "Aardbei"
-                smakenlist.append(smaak)
                 repeat = False
             elif smaak == "c":
                 smaak = "Chocolade"
-                smakenlist.append(smaak)
                 repeat = False
             elif smaak == "m":
                 smaak = "Munt"
-                smakenlist.append(smaak)
                 repeat = False
             elif smaak == "v":
                 smaak = "Vanille"
-                smakenlist.append(smaak)
                 repeat = False
             else:
                 error()
         except:
             error()
-    return smakenlist
+    return smaak
 
 def toppingkiezen(bakjeofhoorntje:str):
     slagroom  = 0.50
@@ -142,6 +141,7 @@ def toppingkiezen(bakjeofhoorntje:str):
             topping = input("Wilt u een topping op uw ijs A) Geen, B) Slagroom, C) Sprinkels of D) Caramel Saus?").lower()
             if topping == "a":
                 repeat = False
+                return 0.0
             elif topping == "b":
                 repeat = False
                 return slagroom
