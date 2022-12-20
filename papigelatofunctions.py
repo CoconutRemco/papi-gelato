@@ -1,6 +1,6 @@
 
 def showintro():
-    print('Welkom bij Papi Gelato je mag alle smaken kiezen zolang het maar vanile ijs is.')
+    print("Welkom bij Papi Gelato")
 
 def error():
     print("Sorry, dat snap ik niet.")
@@ -69,7 +69,7 @@ def meerbestellen():
         error()
     return nognkeer
 
-def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list):
+def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list):
     totaalbolletjes=0
     totaalhoorntjes=0
     totalbakjes=0
@@ -90,16 +90,18 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list):
         else:
             aantalsmaken[smaak]=1
     if "Aardbei" in smaken:
-        print("B.Aardbei: "+str(aantalsmaken['Aardbei'])+"x 1.10 : "+str(aantalsmaken['Aardbei']*1.10))
+        print("B.Aardbei: "+str(aantalsmaken['Aardbei'])+"x 1.10 = "+str(aantalsmaken['Aardbei']*1.10))
     if "Chocolade" in smaken:
-        print("B.Chocolade: "+str(aantalsmaken['Chocolade'])+"x 1.10 : "+str(aantalsmaken['Chocolade']*1.10))
+        print("B.Chocolade: "+str(aantalsmaken['Chocolade'])+"x 1.10 = "+str(aantalsmaken['Chocolade']*1.10))
     if "Vanille" in smaken:
-        print("B.Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 : "+str(aantalsmaken['Vanille']*1.10))
+        print("B.Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 = "+str(aantalsmaken['Vanille']*1.10))
     if "Munt" in smaken:
-        print("B.Munt: "+str(aantalsmaken['Munt'])+"x 1.10 : "+str(aantalsmaken['Munt']*1.10))
-    print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 : "+str(totaalhoorntjes*1.25))
-    print("bakjes: "+str(totalbakjes)+"x 0.75 : "+str(totalbakjes*0.75))
-    print(("totaal: "+str(totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75)))
+        print("B.Munt: "+str(aantalsmaken['Munt'])+"x 1.10 = "+str(aantalsmaken['Munt']*1.10))
+    print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 = "+str(totaalhoorntjes*1.25))
+    print("bakjes: "+str(totalbakjes)+"x 0.75 = "+str(totalbakjes*0.75))
+    if toppings > 0:
+        print("toppings "                              " ="    +str(toppings))
+    print(("totaal: "+str(totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75+toppings)))
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
 def smaken(aantalbolletjes:int):
     smakenlist=[]
@@ -129,6 +131,34 @@ def smaken(aantalbolletjes:int):
             error()
     return smakenlist
 
+def toppingkiezen(bakjeofhoorntje:str):
+    slagroom  = 0.50
+    sprinkels = 0.30
+    caramelsaushoorntje = 0.60
+    caramelsausbakje = 0.90
+    repeat = True
+    while repeat == True:
+        try:
+            topping = input("Wilt u een topping op uw ijs A) Geen, B) Slagroom, C) Sprinkels of D) Caramel Saus?").lower()
+            if topping == "a":
+                repeat = False
+            elif topping == "b":
+                repeat = False
+                return slagroom
+            elif topping == "c":
+                repeat = False
+                return  sprinkels
+            elif topping == "d":
+                repeat = False
+                if bakjeofhoorntje == "hoorntje":
+                    return caramelsaushoorntje
+                elif bakjeofhoorntje == "bakje":
+                    return caramelsausbakje
+            else:
+                error()
+        except:
+            error()
+            repeat=True
 
 
 

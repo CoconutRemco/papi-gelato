@@ -3,6 +3,7 @@ herhalen =  True
 totaalbolletjes = 0
 smakenbolletjestotaal = []
 verpakkingen = []
+toppings = 0
 showintro()
 while herhalen == True:
     bolletjes=aantalbolletjes()
@@ -11,6 +12,8 @@ while herhalen == True:
         for smaak in smakenbolletjes:
             smakenbolletjestotaal.append(smaak)
     verpakkingbolletjes = verpakking(bolletjes)
+    topping=toppingkiezen(verpakkingbolletjes)
+    toppings+=topping
     print("Hier is uw "+str(verpakkingbolletjes)+" met "+str(bolletjes)+" bolletje(s).")
     nognkeer=meerbestellen()
     if nognkeer == True:
@@ -19,7 +22,7 @@ while herhalen == True:
         herhalen = False
     totaalbolletjes+=bolletjes
     verpakkingen.append(verpakkingbolletjes)
-bonnetje(totaalbolletjes,verpakkingen,smakenbolletjestotaal)
+bonnetje(totaalbolletjes,verpakkingen,smakenbolletjestotaal,toppings)
 totziens()
 
 
