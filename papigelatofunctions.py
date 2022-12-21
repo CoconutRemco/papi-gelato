@@ -3,7 +3,7 @@ def showintro():
     print("Welkom bij Papi Gelato")
 
 def error():
-    print("Sorry, dat snap ik niet.")
+    print("Sorry dat is geen optie die we aanbieden...")
 
 def errorbakje():
     print("Sorry, een bakje kan maximaal 8 bolletjes bevatten.")
@@ -84,7 +84,7 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list,zake
         prijsliterofbolletjes = 9.80
     else:
         literofbolletjes = "B"
-        prijsliterofbolletjes = 1.10
+        prijsliterofbolletjes = 0.95
     totaalbolletjes=0
     totaalhoorntjes=0
     totalbakjes=0
