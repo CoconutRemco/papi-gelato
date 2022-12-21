@@ -119,15 +119,15 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list,zake
     if toppings > 0:
         print("toppings            "                              " ="    +str(toppings))
     totaal=totaalbolletjes*float(prijsliterofbolletjes)+totaalhoorntjes*1.25+totalbakjes*0.75+toppings
-    btw=totaal/100*9
+    btw=totaal/100*6
     print("totaal: "+str(round(totaal,2)))
     if zakelijkofparticulier == True:
-        print("Btw (9%)         "" ="+str((btw)))
+        print("Btw (6%)         "" ="+str((btw)))
     print("-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-=-")
 
 def smaken(aantalbolletjes:int,zakelijkofparticulier:bool):
     repeat = True
-    smaakdict={"a":"Aardbei","c":"Chocolade","m":"Munt","v":"Vanille",}
+    smaakdict={"a":"Aardbei","c":"Chocolade","v":"Vanille",}
     smakentext = ''
     if zakelijkofparticulier == True:
         literofbolletje = "liter "
