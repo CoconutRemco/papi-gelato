@@ -1,17 +1,26 @@
-
+## Variabelen voor prijzen
+prijsLiter= 9.80
+prijsBolletje= 0.95
+prijsHoorntje= 1.25
+prijsbakje= 0.75
+toppingsprijzen = {"a":0.0,"b":0.50,"c":0.30,"dh":0.60,"db":0.90}
+toppingsdict = {"a":"Geen","b":"Slagroom","c":"Sprinkels","d":"Caramelsaus"}
+smaakdict={"a":"Aardbei","c":"Chocolade","v":"Vanille"}
+## Functies
+## Welkomstscherm
 def showintro():
     print("Welkom bij Papi Gelato")
-
+## Error messages
 def error():
     print("Sorry dat is geen optie die we aanbieden...")
 
 def errorbakje():
     print("Sorry, een bakje kan maximaal 8 bolletjes bevatten.")
-
+## Afscheidsboodschap
 def totziens():
     print("Bedankt voor het bestellen bij Papi Gelato, tot ziens!")
-
-def aantalbolletjes(zakelijkofparticulier:bool):
+## Bestellen van aantal bolletjes minimaal 1 maximaal 8
+def aantalbolletjes(zakelijkofparticulier:bool) -> int:
     herhalen =  True
     while herhalen == True:
         try:
@@ -25,11 +34,11 @@ def aantalbolletjes(zakelijkofparticulier:bool):
                     herhalen = True
             else:
                 bolletjes = int(input('Hoeveel bolletjes wilt u? '))
-                if bolletjes >= 1 and bolletjes <= 4:
+                if bolletjes >= 1 and bolletjes < 4:
                     aantalbolletjes = bolletjes
                     herhalen = False
                     return aantalbolletjes
-                elif bolletjes > 4 and bolletjes < 9:
+                elif bolletjes >= 4 and bolletjes < 9:
                     aantalbolletjes = bolletjes
                     herhalen = False 
                     return aantalbolletjes
@@ -42,8 +51,8 @@ def aantalbolletjes(zakelijkofparticulier:bool):
         except:
             error()
             herhalen = True
-
-def verpakking(aantalbolletjes):
+## Kiezen van verpakking bakje of hoorntje
+def verpakking(aantalbolletjes) -> str:
     herhalen = True
     while herhalen == True:
         try:
@@ -66,8 +75,8 @@ def verpakking(aantalbolletjes):
             error()
             herhalen = True
 
-
-def meerbestellen():
+## Keuze van meerbestellen ja of nee
+def meerbestellen() -> bool:
     try:
         meerbestellen=input("Wilt u meer bestellen?").lower()
         if meerbestellen == 'ja':
@@ -77,14 +86,16 @@ def meerbestellen():
     except:
         error()
     return nognkeer
-
+## Printen van bonnetje met prijzen en totaalprijs
+## Bonnetje kijkt zelf of het zakelijk of particulier is en past zich hier naar aan
+## Bonnetje kijkt ook naar de verpakkingen en past zich hier naar aan
 def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list,zakelijkofparticulier:bool):
     if zakelijkofparticulier == True:
         literofbolletjes = "L"
-        prijsliterofbolletjes = 9.80
+        prijsliterofbolletjes = prijsLiter
     else:
         literofbolletjes = "B"
-        prijsliterofbolletjes = 0.95
+        prijsliterofbolletjes = prijsBolletje
     totaalbolletjes=0
     totaalhoorntjes=0
     totalbakjes=0
@@ -104,30 +115,28 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list,zake
             aantalsmaken[smaak]+=1
         else:
             aantalsmaken[smaak]=1
-    if "Aardbei" in smaken:
-        print(str(literofbolletjes)+".Aardbei: "+str(aantalsmaken['Aardbei'])+"x 1.10 = "+str(aantalsmaken['Aardbei']*float(prijsliterofbolletjes)))
-    if "Chocolade" in smaken:
-        print(str(literofbolletjes)+".Chocolade: "+str(aantalsmaken['Chocolade'])+"x 1.10 = "+str(aantalsmaken['Chocolade']*float(prijsliterofbolletjes)))
-    if "Vanille" in smaken:
-        print(str(literofbolletjes)+".Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 = "+str(aantalsmaken['Vanille']*float(prijsliterofbolletjes)))
-    if "Munt" in smaken:
-        print(str(literofbolletjes)+".Munt: "+str(aantalsmaken['Munt'])+"x 1.10 = "+str(aantalsmaken['Munt']*float(prijsliterofbolletjes)))
+    for smaak in aantalsmaken:
+        prijs = format(aantalsmaken[smaak]*prijsliterofbolletjes)
+        print(str(literofbolletjes)+"."+str(smaak)+" "+str(aantalsmaken[smaak])+"x "+str(prijsliterofbolletjes)+" = "+str(prijs))
     if totaalhoorntjes >0:
-        print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 = "+str(totaalhoorntjes*1.25))
+        prijs = format(totaalhoorntjes*1.25)
+        print("hoorntjes: "+str(totaalhoorntjes)+"x "+str(prijsHoorntje)+" = "+str(prijs))
     if totalbakjes >0:
-        print("bakjes: "+str(totalbakjes)+"x 0.75 = "+str(totalbakjes*0.75))
+        prijs = format(totalbakjes*0.75)
+        print("bakjes: "+str(totalbakjes)+"x "+str(prijsbakje)+" = "+str(prijs))
     if toppings > 0:
-        print("toppings            "                              " ="    +str(toppings))
+        prijs = format(toppings)
+        print("toppings            "                              " ="    +str(prijs))
     totaal=totaalbolletjes*float(prijsliterofbolletjes)+totaalhoorntjes*1.25+totalbakjes*0.75+toppings
     btw=totaal/100*6
     print("totaal: "+str(round(totaal,2)))
     if zakelijkofparticulier == True:
+        btw = format(btw)
         print("Btw (6%)         "" ="+str((btw)))
-    print("-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-=-")
-
-def smaken(aantalbolletjes:int,zakelijkofparticulier:bool):
+    print("-=-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-")
+## Kiezen van smaken
+def smaken(aantalbolletjes:int,zakelijkofparticulier:bool)  -> str:
     repeat = True
-    smaakdict={"a":"Aardbei","c":"Chocolade","v":"Vanille",}
     smakentext = ''
     if zakelijkofparticulier == True:
         literofbolletje = "liter "
@@ -143,10 +152,8 @@ def smaken(aantalbolletjes:int,zakelijkofparticulier:bool):
     except:
         error()
             
-
-def toppingkiezen(bakjeofhoorntje:str):
-    toppingsprijzen = {"a":0.0,"b":0.50,"c":0.30,"dh":0.60,"db":0.90}
-    toppingsdict = {"a":"Geen","b":"Slagroom","c":"Sprinkels","d":"Caramelsaus"}
+## Kiezen van toppings
+def toppingkiezen(bakjeofhoorntje:str) -> float:
     repeat = True
     toppingtext = ''
     for keys , value in toppingsdict.items():
@@ -164,8 +171,8 @@ def toppingkiezen(bakjeofhoorntje:str):
         except:
             error()
             repeat=True
-
-def zakelijkeklant():
+## Kijken of de klant een zakelijke klant is of een particuliere klant
+def zakelijkeklant() -> bool:
     repeat = True
     while repeat == True:
         try:
@@ -181,6 +188,12 @@ def zakelijkeklant():
         except:
             error()
             repeat = True
+## Formateren van prijzenS
+def format(prijs:float) -> str:
+    return f'{prijs: .2f}'
+
+
+
 
 
 
