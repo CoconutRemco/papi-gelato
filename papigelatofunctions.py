@@ -11,25 +11,34 @@ def errorbakje():
 def totziens():
     print("Bedankt voor het bestellen bij Papi Gelato, tot ziens!")
 
-def aantalbolletjes():
+def aantalbolletjes(zakelijkofparticulier:bool):
     herhalen =  True
     while herhalen == True:
         try:
-            bolletjes = int(input('Hoeveel bolletjes wilt u? '))
-            if bolletjes >= 1 and bolletjes <= 4:
-                aantalbolletjes = bolletjes
-                herhalen = False
-                return aantalbolletjes
-            elif bolletjes > 4 and bolletjes < 9:
-                aantalbolletjes = bolletjes
-                herhalen = False 
-                return aantalbolletjes
-            elif bolletjes > 8:
-                errorbakje()
-                herhalen = True
-            elif bolletjes <=0:
-                error()
-                herhalen = True
+            if zakelijkofparticulier == True:
+                liters = int(input('Hoeveel liter ijs wilt u?'))
+                if liters >=1:
+                    herhalen = False
+                    return liters
+                else:
+                    error()
+                    herhalen = True
+            else:
+                bolletjes = int(input('Hoeveel bolletjes wilt u? '))
+                if bolletjes >= 1 and bolletjes <= 4:
+                    aantalbolletjes = bolletjes
+                    herhalen = False
+                    return aantalbolletjes
+                elif bolletjes > 4 and bolletjes < 9:
+                    aantalbolletjes = bolletjes
+                    herhalen = False 
+                    return aantalbolletjes
+                elif bolletjes > 8:
+                    errorbakje()
+                    herhalen = True
+                elif bolletjes <=0:
+                    error()
+                    herhalen = True
         except:
             error()
             herhalen = True
@@ -69,7 +78,13 @@ def meerbestellen():
         error()
     return nognkeer
 
-def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list):
+def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list,zakelijkofparticulier:bool):
+    if zakelijkofparticulier == True:
+        literofbolletjes = "L"
+        prijsliterofbolletjes = 9.80
+    else:
+        literofbolletjes = "B"
+        prijsliterofbolletjes = 1.10
     totaalbolletjes=0
     totaalhoorntjes=0
     totalbakjes=0
@@ -90,77 +105,82 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list):
         else:
             aantalsmaken[smaak]=1
     if "Aardbei" in smaken:
-        print("B.Aardbei: "+str(aantalsmaken['Aardbei'])+"x 1.10 = "+str(aantalsmaken['Aardbei']*1.10))
+        print(str(literofbolletjes)+".Aardbei: "+str(aantalsmaken['Aardbei'])+"x 1.10 = "+str(aantalsmaken['Aardbei']*float(prijsliterofbolletjes)))
     if "Chocolade" in smaken:
-        print("B.Chocolade: "+str(aantalsmaken['Chocolade'])+"x 1.10 = "+str(aantalsmaken['Chocolade']*1.10))
+        print(str(literofbolletjes)+".Chocolade: "+str(aantalsmaken['Chocolade'])+"x 1.10 = "+str(aantalsmaken['Chocolade']*float(prijsliterofbolletjes)))
     if "Vanille" in smaken:
-        print("B.Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 = "+str(aantalsmaken['Vanille']*1.10))
+        print(str(literofbolletjes)+".Vanille: "+str(aantalsmaken['Vanille'])+"x 1.10 = "+str(aantalsmaken['Vanille']*float(prijsliterofbolletjes)))
     if "Munt" in smaken:
-        print("B.Munt: "+str(aantalsmaken['Munt'])+"x 1.10 = "+str(aantalsmaken['Munt']*1.10))
+        print(str(literofbolletjes)+".Munt: "+str(aantalsmaken['Munt'])+"x 1.10 = "+str(aantalsmaken['Munt']*float(prijsliterofbolletjes)))
     if totaalhoorntjes >0:
         print("hoorntjes: "+str(totaalhoorntjes)+"x 1.25 = "+str(totaalhoorntjes*1.25))
     if totalbakjes >0:
         print("bakjes: "+str(totalbakjes)+"x 0.75 = "+str(totalbakjes*0.75))
     if toppings > 0:
         print("toppings            "                              " ="    +str(toppings))
-    totaal=totaalbolletjes*1.10+totaalhoorntjes*1.25+totalbakjes*0.75+toppings
+    totaal=totaalbolletjes*float(prijsliterofbolletjes)+totaalhoorntjes*1.25+totalbakjes*0.75+toppings
+    btw=totaal/100*9
     print("totaal: "+str(round(totaal,2)))
+    if zakelijkofparticulier == True:
+        print("Btw (9%)         "" ="+str((btw)))
     print("-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-=-")
 
-def smaken(aantalbolletjes:int):
+def smaken(aantalbolletjes:int,zakelijkofparticulier:bool):
     repeat = True
-    while repeat == True:
-        try:
-            smaak = input("Welke smaak wilt u voor bolletje "+str(aantalbolletjes+1)+" A) Aardbei, C) Chocolade, M) Munt of V) Vanille?”").lower()
-            if smaak == "a":
-                smaak = "Aardbei"
-                repeat = False
-            elif smaak == "c":
-                smaak = "Chocolade"
-                repeat = False
-            elif smaak == "m":
-                smaak = "Munt"
-                repeat = False
-            elif smaak == "v":
-                smaak = "Vanille"
-                repeat = False
-            else:
-                error()
-        except:
-            error()
-    return smaak
+    smaakdict={"a":"Aardbei","c":"Chocolade","m":"Munt","v":"Vanille",}
+    smakentext = ''
+    if zakelijkofparticulier == True:
+        literofbolletje = "liter "
+    else:
+        literofbolletje = 'bolletje '
+    for keys , value in smaakdict.items():
+        smakentext += keys +") " + value + " "
+    try:
+        while repeat == True:
+                smaak = input("Welke smaak wilt u voor "+str(literofbolletje)+str(aantalbolletjes+1)+" "+str(smakentext)).lower()
+                if smaak in smaakdict.keys():
+                    return smaakdict[smaak]
+    except:
+        error()
+            
 
 def toppingkiezen(bakjeofhoorntje:str):
-    slagroom  = 0.50
-    sprinkels = 0.30
-    caramelsaushoorntje = 0.60
-    caramelsausbakje = 0.90
+    toppingsprijzen = {"a":0.0,"b":0.50,"c":0.30,"dh":0.60,"db":0.90}
+    toppingsdict = {"a":"Geen","b":"Slagroom","c":"Sprinkels","d":"Caramelsaus"}
     repeat = True
+    toppingtext = ''
+    for keys , value in toppingsdict.items():
+        toppingtext += keys +") " + value + " "
     while repeat == True:
         try:
-            topping = input("Wilt u een topping op uw ijs A) Geen, B) Slagroom, C) Sprinkels of D) Caramel Saus?").lower()
-            if topping == "a":
-                repeat = False
-                return 0.0
-            elif topping == "b":
-                repeat = False
-                return slagroom
-            elif topping == "c":
-                repeat = False
-                return  sprinkels
-            elif topping == "d":
-                repeat = False
-                if bakjeofhoorntje == "hoorntje":
-                    return caramelsaushoorntje
-                elif bakjeofhoorntje == "bakje":
-                    return caramelsausbakje
-            else:
-                error()
+            topping = input("Wilt u een topping op uw ijs? "+toppingtext).lower()
+            if topping in toppingsdict.keys():
+                if bakjeofhoorntje == 'bakje' and topping == "d":
+                    return toppingsprijzen["db"]
+                elif bakjeofhoorntje == 'hoorntje' and topping == "d":
+                    return toppingsprijzen["dh"]
+                else:
+                    return toppingsprijzen[topping]
         except:
             error()
             repeat=True
 
-
+def zakelijkeklant():
+    repeat = True
+    while repeat == True:
+        try:
+            zakelijk = input("Bent u 1) een particuliere klant of 2) een zakelijke klant?").lower()
+            if zakelijk == '2':
+                repeat=False
+                return True   
+            elif zakelijk == '1':
+                repeat=False
+                return False
+            else:
+                error()
+        except:
+            error()
+            repeat = True
 
 
 
