@@ -5,7 +5,8 @@ prijsHoorntje= 1.25
 prijsbakje= 0.75
 toppingsprijzen = {"a":0.0,"b":0.50,"c":0.30,"dh":0.60,"db":0.90}
 toppingsdict = {"a":"Geen","b":"Slagroom","c":"Sprinkels","d":"Caramelsaus"}
-smaakdict={"a":"Aardbei","c":"Chocolade","v":"Vanille"}
+smaakdict={"a":"Aardbei","c":"Chocola","v":"Vanille"}
+width =18
 ## Functies
 ## Welkomstscherm
 def showintro():
@@ -34,11 +35,11 @@ def aantalbolletjes(zakelijkofparticulier:bool) -> int:
                     herhalen = True
             else:
                 bolletjes = int(input('Hoeveel bolletjes wilt u? '))
-                if bolletjes >= 1 and bolletjes < 4:
+                if bolletjes >= 1 and bolletjes <= 3:
                     aantalbolletjes = bolletjes
                     herhalen = False
                     return aantalbolletjes
-                elif bolletjes >= 4 and bolletjes < 9:
+                elif bolletjes >= 4 and bolletjes <= 8:
                     aantalbolletjes = bolletjes
                     herhalen = False 
                     return aantalbolletjes
@@ -56,7 +57,7 @@ def verpakking(aantalbolletjes) -> str:
     herhalen = True
     while herhalen == True:
         try:
-            if aantalbolletjes <=4:
+            if aantalbolletjes <4:
                 bakje = input('Wilt u deze '+ str(aantalbolletjes) +' bolletje(s) in een hoorntje of een bakje? ').lower()
                 if bakje == 'bakje':
                     verpakking = 'bakje'
@@ -117,22 +118,25 @@ def bonnetje(aantalbolletjes:int,verpakkingen:str,smaken:list,toppings:list,zake
             aantalsmaken[smaak]=1
     for smaak in aantalsmaken:
         prijs = format(aantalsmaken[smaak]*prijsliterofbolletjes)
-        print(str(literofbolletjes)+"."+str(smaak)+" "+str(aantalsmaken[smaak])+"x "+str(prijsliterofbolletjes)+" = "+str(prijs))
+        text = printnetjes(str(aantalsmaken[smaak])+"x "+str(prijsliterofbolletjes)+" = "+str(prijs))
+        print(str(literofbolletjes)+"."+str(smaak)+" "+text)
     if totaalhoorntjes >0:
         prijs = format(totaalhoorntjes*1.25)
-        print("hoorntjes: "+str(totaalhoorntjes)+"x "+str(prijsHoorntje)+" = "+str(prijs))
+        print("hoorntjes:   "+str(totaalhoorntjes)+"x "+str(prijsbakje)+" = "+str(prijs))
     if totalbakjes >0:
         prijs = format(totalbakjes*0.75)
-        print("bakjes: "+str(totalbakjes)+"x "+str(prijsbakje)+" = "+str(prijs))
+        print("bakjes:      "+str(totalbakjes)+"x "+str(prijsbakje)+" = "+str(prijs))
     if toppings > 0:
         prijs = format(toppings)
-        print("toppings            "                              " ="    +str(prijs))
+        print("toppings:           "                              " = "+str(prijs)+"   +")
     totaal=totaalbolletjes*float(prijsliterofbolletjes)+totaalhoorntjes*1.25+totalbakjes*0.75+toppings
     btw=totaal/100*6
-    print("totaal: "+str(round(totaal,2)))
+    totaal=format(totaal)
+    print("                     "+"-------------")
+    print("totaal:                "+str(totaal))
     if zakelijkofparticulier == True:
         btw = format(btw)
-        print("Btw (6%)         "" ="+str((btw)))
+        print("Btw (6%)             "" ="+str((btw)))
     print("-=-=-=-=-=-=-=-=-=-=-Papi Gelato-=-=-=-=-=-=-=-=-=-=-=-")
 ## Kiezen van smaken
 def smaken(aantalbolletjes:int,zakelijkofparticulier:bool)  -> str:
@@ -188,9 +192,14 @@ def zakelijkeklant() -> bool:
         except:
             error()
             repeat = True
-## Formateren van prijzenS
+## Formateren van prijzen
 def format(prijs:float) -> str:
     return f'{prijs: .2f}'
+
+## Netjes maken van prints
+def printnetjes(my_str: str,):
+    result = f'{my_str: >{width}}'
+    return result
 
 
 

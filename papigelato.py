@@ -31,14 +31,14 @@ while herhalen == True:
         topping=toppingkiezen(verpakkingbolletjes)
         toppings+=topping
         print("Hier is uw "+str(verpakkingbolletjes)+" met "+str(bolletjes)+" bolletje(s).")
+        totaalbolletjes+=bolletjes
+        verpakkingen.append(verpakkingbolletjes)
 ## Vragen of je nog meer wilt bestellen
         nognkeer=meerbestellen()
         if nognkeer == True:
             herhalen = True
         else:
             herhalen = False
-        totaalbolletjes+=bolletjes
-        verpakkingen.append(verpakkingbolletjes)
         nognkeer=False
 ## Printen van bonnetje
 bonnetje(totaalbolletjes,verpakkingen,smakenbolletjestotaal,toppings,zakelijkofparticulier)
